@@ -1,0 +1,76 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.header {
+  font-size: 3.6rem;
+  font-weight: 300;
+  letter-spacing: -1px;
+  margin: 0 0 0 1.6rem;
+}
+
+.movie-content {
+  width: 100%;
+  height: 22.3rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.time-bar {
+  background-color: #d9bbbb;
+  height: 2px;
+  width: 0%;
+  position: absolute;
+  z-index: 5;
+  bottom: 2px;
+  transition: all 300ms;
+}
+
+.movie-content-pagination {
+  display: flex;
+  flex-direction: row;
+  gap: 1.6rem;
+  margin: 0 auto;
+}
+
+.movie-content-pagination-tab {
+  border-radius: 100px;
+  width: 8px;
+  height: 8px;
+  border-style: solid;
+  border-color: #b18d8d;
+  background-color: transparent;
+  border-width: 1px;
+}
+
+.movie-content-pagination-tab-selection {
+  background-color: #eed2d2;
+}
+
+.loading-spinner-container {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-spinner {
+  width: 8rem;
+  height: 8rem;
+}
+
+@media only screen and (min-width: 510px) {
+  .movie-content {
+    height: 27.2rem;
+  }
+}
+
+@media only screen and (min-width: 834px) {
+  .movie-content {
+    height: 36.2rem;
+  }
+}

@@ -1,0 +1,32 @@
+.search-result {
+  background-color: #072124;
+  border-bottom: 1px solid #175d67;
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.4rem;
+  gap: 1rem;
+  width: 100vw;
+}
+
+.img {
+  max-width: 11.3rem;
+}
+
+.title {
+  font-size: 2.4rem;
+  font-weight: 500;
+}
+
+.director {
+  font-size: 1.6rem;
+}
+
+.text-container {
+  gap: 0.5rem;
+}
+
+@media only screen and (min-width: 834px) {
+  .search-result {
+    width: 100%;
+  }
+}

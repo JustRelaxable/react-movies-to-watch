@@ -1,0 +1,43 @@
+:root {
+  --background-color-primary: #041214;
+  --text-color-primary: #fff;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  -webkit-text-size-adjust: none;
+}
+
+body {
+  background-color: var(--background-color-primary);
+  color: var(--text-color-primary);
+  font-family: "Montserrat", "sans-serif";
+  padding: 24px 0;
+  position: relative;
+}
+
+@media only screen and (max-width: 320px) {
+  html {
+    font-size: 40.5%;
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 409px) {
+  html {
+    font-size: 49.5%;
+  }
+}
+
+@media only screen and (min-width: 510px) and (max-width: 620px) {
+  html {
+    font-size: 53.5%;
+  }
+}

@@ -1,0 +1,13 @@
+.section-holder {
+  display: flex;
+  flex-direction: column;
+  gap: 2.1rem;
+  position: relative;
+}
+
+@media only screen and (min-width: 996px) {
+  .section-holder {
+    width: 100rem;
+    margin: 0 auto;
+  }
+}

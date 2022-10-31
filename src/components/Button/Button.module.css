@@ -1,0 +1,19 @@
+.button {
+  font-size: 2.2rem;
+  border-radius: 10px;
+  color: var(--text-color-primary);
+  padding: 1.2rem 2.1rem;
+  border-style: none;
+}
+
+.red {
+  background-color: #de1212;
+}
+
+.gray {
+  background-color: #2f4062;
+}
+
+.green {
+  background-color: green;
+}
