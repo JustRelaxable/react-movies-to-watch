@@ -7,6 +7,8 @@
 
 .img {
   max-width: 17.8rem;
+  height: 26.5rem;
+  object-fit: cover;
   border-radius: 10px;
 }
 
