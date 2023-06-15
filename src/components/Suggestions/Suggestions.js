@@ -1,8 +1,9 @@
 import styles from "./Suggestions.module.css";
 import SuggestionMovie from "../SuggestionMovie/SuggestionMovie";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import loadingSpinner from "../../svg-loaders/rings.svg";
-//https://m.media-amazon.com/images/M/MV5BNDczNjY2NGUtNzg1YS00NDVlLTkxZWUtMjg2ZDQ0OWJhZTBhXkEyXkFqcGdeQWpnYW1i._V1_QL75_UX750_CR0,0,750,422_.jpg
+
+import { CorsURLContext } from "../../App";
 
 const Suggestions = (props) => {
   const movieCount = 6;
@@ -13,11 +14,11 @@ const Suggestions = (props) => {
   const [movieIndex, setMovieIndex] = useState(0);
   const [suggestedMovies, setSuggestedMovies] = useState([]);
   const moviesReady = suggestedMovies.length > 0;
+  const corsUrl = useContext(CorsURLContext);
+
   useEffect(() => {
     async function fetchSuggestedMovies() {
-      const fetchedDocument = fetch(
-        "https://cors-proxy-222.herokuapp.com/https://m.imdb.com/"
-      )
+      const fetchedDocument = fetch(`${corsUrl}https://m.imdb.com/`)
         .then((x) => x.text())
         .then((x) => {
           const parser = new DOMParser();
@@ -25,15 +26,17 @@ const Suggestions = (props) => {
           return doc;
         });
       const suggestedMovieTitles = await fetchedDocument
-        .then((x) => x.querySelectorAll(".sc-8f5243a8-4.cIiuVe"))
+        .then((x) => x.querySelectorAll(".sc-84f23e63-4.gOGhjH"))
         .then((x) => Array.from(x).map((x) => x.innerText));
 
       const suggestedMovieSubheaders = await fetchedDocument
-        .then((x) => x.querySelectorAll(".sc-8f5243a8-3.iDptvJ"))
+        .then((x) => x.querySelectorAll(".sc-84f23e63-3.cRoTpH"))
         .then((x) => Array.from(x).map((x) => x.innerText));
 
       const suggestedMoviePictureSources = await fetchedDocument
-        .then((x) => x.querySelectorAll(".ipc-media.sc-26c591b4-1>.ipc-image"))
+        .then((x) =>
+          x.querySelectorAll(".sc-bffbe2eb-1>.ipc-slate>.ipc-media>.ipc-image")
+        )
         .then((x) => Array.from(x).map((x) => x.src));
 
       const fetchedSuggestedMovies = [];

@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Button from "../Button/Button";
 import styles from "./MovieDetailsPage.module.css";
+
+import { CorsURLContext } from "../../App";
 
 const MovieDetailsPage = (props) => {
   const isMovieSelected = Object.keys(props.selectedMovie).length > 0;
@@ -13,11 +15,12 @@ const MovieDetailsPage = (props) => {
   const [movieDirector, setMovieDirector] = useState("");
   const [firstTime, setFirstTime] = useState(true);
   const [movieInList, setMovieInList] = useState(false);
+  const corsUrl = useContext(CorsURLContext);
 
   useEffect(() => {
     async function fetchMovieStoryline() {
       const request = await fetch(
-        `https://cors-proxy-222.herokuapp.com/https://caching.graphql.imdb.com/?operationName=TMD_Storyline&variables=%7B%22titleId%22%3A%22${props.selectedMovie.key}%22%7D&extensions=%7B%22persistedQuery%22%3A%7B%22sha256Hash%22%3A%2287f41463a48af95ebba3129889d17181402622bfd30c8dc9216d99ac984f0091%22%2C%22version%22%3A1%7D%7D`,
+        `${corsUrl}https://caching.graphql.imdb.com/?operationName=TMD_Storyline&variables=%7B%22titleId%22%3A%22${props.selectedMovie.key}%22%7D&extensions=%7B%22persistedQuery%22%3A%7B%22sha256Hash%22%3A%2287f41463a48af95ebba3129889d17181402622bfd30c8dc9216d99ac984f0091%22%2C%22version%22%3A1%7D%7D`,
         {
           headers: { "Content-Type": "application/json" },
         }

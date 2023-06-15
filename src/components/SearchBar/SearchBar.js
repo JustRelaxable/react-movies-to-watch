@@ -1,13 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import SearchResultContainer from "../SearchResultContainer/SearchResultContainer";
 import styles from "./SearchBar.module.css";
+import { CorsURLContext } from "../../App";
 
-const SearchBar = (props) => {
+const SearchBar = ({ setMovie, selectedMovie, setHeight }) => {
   const [firstFocus, setFirstFocus] = useState(true);
   const [searchResult, setSearchResult] = useState([]);
-  const [searchKey, setSearchKey] = useState("Search movies to add");
+  const [searchKey, setSearchKey] = useState("");
+  const corsUrl = useContext(CorsURLContext);
 
   useEffect(() => {
+    if (searchKey === "") {
+      setSearchResult([]);
+      return;
+    }
     const searchTimer = setTimeout(sendMovieSearchRequest, 500);
     return () => {
       clearTimeout(searchTimer);
@@ -16,17 +22,17 @@ const SearchBar = (props) => {
 
   useEffect(() => {
     if (!firstFocus) {
-      setSearchKey("Search movies to add");
+      setSearchKey("");
     }
-  }, [props.selectedMovie]);
+  }, [selectedMovie]);
 
   useEffect(() => {
-    props.setHeight(searchResult.length * 20);
+    setHeight(searchResult.length * 20);
   }, [searchResult]);
 
   const sendMovieSearchRequest = async () => {
     const response = await fetch(
-      `https://cors-proxy-222.herokuapp.com/https://v3.sg.media-imdb.com/suggestion/x/${searchKey}.json?includeVideos=0`
+      `${corsUrl}https://v3.sg.media-imdb.com/suggestion/x/${searchKey}.json?includeVideos=0`
     );
     const data = await response.json();
     const movies = data.d.filter(
@@ -51,17 +57,18 @@ const SearchBar = (props) => {
       <p className={styles.header}>Welcome Back</p>
       <div className={styles.searchbar}>
         <input
-          ref={props.refValue}
+          //ref={refValue}
           onChange={onMovieInputChangeHandler}
           onFocus={onFocusInputHandler}
           className={styles["searchbar-input"]}
           type="text"
+          placeholder="Search movies to add"
           value={searchKey}
         ></input>
         <p>A</p>
         <SearchResultContainer
           movies={searchResult}
-          setMovie={props.setMovie}
+          setMovie={setMovie}
         ></SearchResultContainer>
       </div>
     </div>

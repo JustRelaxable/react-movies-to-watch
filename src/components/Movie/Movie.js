@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./Movie.module.css";
-// https://m.media-amazon.com/images/M/MV5BMDU2ZmM2OTYtNzIxYy00NjM5LTliNGQtN2JmOWQzYTBmZWUzXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_QL75_UX380_CR0,0,380,562_.jpg
+
+import { CorsURLContext } from "../../App";
 
 const Movie = (props) => {
   const [movieData, setMovieData] = useState(null);
+  const corsUrl = useContext(CorsURLContext);
   useEffect(() => {
     async function getMovieData() {
       const fetchedData = await fetch(
-        `https://cors-proxy-222.herokuapp.com/https://v3.sg.media-imdb.com/suggestion/x/${props.movieID}.json`
+        `${corsUrl}https://v3.sg.media-imdb.com/suggestion/x/${props.movieID}.json`
       ).then((x) => x.json());
       setMovieData(fetchedData);
     }
