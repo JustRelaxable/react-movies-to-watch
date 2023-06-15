@@ -1,21 +1,25 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import styles from "./Movie.module.css";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { CorsURLContext } from "../../App";
 
-const Movie = ({ movieID, selectedMovie, setMovie }) => {
+const Movie = ({ movieID, selectedMovie, setMovie, loadMovieData }) => {
   const [movieData, setMovieData] = useState(null);
   const [movieImgLoaded, setMovieImgLoaded] = useState(false);
   const corsUrl = useContext(CorsURLContext);
+
   useEffect(() => {
+    if (!loadMovieData) return;
+    if (movieData !== null) return;
     async function getMovieData() {
-      const fetchedData = await fetch(
+      await fetch(
         `${corsUrl}https://v3.sg.media-imdb.com/suggestion/x/${movieID}.json`
-      ).then((x) => x.json());
-      setMovieData(fetchedData);
+      )
+        .then((x) => x.json())
+        .then((x) => setMovieData(x));
     }
     getMovieData();
-  }, []);
+  }, [loadMovieData]);
 
   function showMovieDetails() {
     setMovie({
@@ -31,10 +35,18 @@ const Movie = ({ movieID, selectedMovie, setMovie }) => {
     ? { display: "block" }
     : { display: "none" };
 
+  const componentDisplay = loadMovieData
+    ? { display: "block" }
+    : { display: "none" };
+
   return (
     <>
       {movieData && (
-        <div className={styles.container} onClick={showMovieDetails}>
+        <div
+          className={styles.container}
+          onClick={showMovieDetails}
+          style={componentDisplay}
+        >
           {!movieImgLoaded && <LoadingSpinner />}
           <img
             style={movieImageStyle}

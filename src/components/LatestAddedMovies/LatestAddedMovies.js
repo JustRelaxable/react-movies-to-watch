@@ -38,6 +38,7 @@ const LatestAddedMovies = ({ style, selectedMovie, setMovie }) => {
           <MovieContainer
             setAddedMovies={setAddedMovies}
             renderedMovies={renderedMovies}
+            addedMovies={addedMovies}
             selectedMovie={selectedMovie}
             setMovie={setMovie}
           ></MovieContainer>
