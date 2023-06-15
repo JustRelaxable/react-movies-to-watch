@@ -44,6 +44,11 @@
   display: none;
 }
 
+.magnifyingGlass {
+  fill: white;
+  height: 2rem;
+}
+
 @media only screen and (min-width: 834px) {
   .header {
     display: block;
