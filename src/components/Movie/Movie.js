@@ -35,9 +35,7 @@ const Movie = ({ movieID, selectedMovie, setMovie, loadMovieData }) => {
     ? { display: "block" }
     : { display: "none" };
 
-  const componentDisplay = loadMovieData
-    ? { display: "block" }
-    : { display: "none" };
+  const componentDisplay = loadMovieData ? {} : { display: "none" };
 
   return (
     <>
