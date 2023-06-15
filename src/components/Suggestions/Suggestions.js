@@ -1,8 +1,7 @@
 import styles from "./Suggestions.module.css";
 import SuggestionMovie from "../SuggestionMovie/SuggestionMovie";
 import { useContext, useEffect, useState } from "react";
-import loadingSpinner from "../../svg-loaders/rings.svg";
-
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { CorsURLContext } from "../../App";
 
 const Suggestions = ({ style }) => {
@@ -104,14 +103,7 @@ const Suggestions = ({ style }) => {
     >
       <p className={styles.header}>Suggestions</p>
       <div className={styles["movie-content"]}>
-        {!moviesReady && (
-          <div className={styles["loading-spinner-container"]}>
-            <img
-              src={loadingSpinner}
-              className={styles["loading-spinner"]}
-            ></img>
-          </div>
-        )}
+        {!moviesReady && <LoadingSpinner />}
         {moviesReady && (
           <>
             {suggestedMovies.map((e, i) => (

@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./Movie.module.css";
-
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { CorsURLContext } from "../../App";
 
 const Movie = ({ movieID, selectedMovie, setMovie }) => {
   const [movieData, setMovieData] = useState(null);
+  const [movieImgLoaded, setMovieImgLoaded] = useState(false);
   const corsUrl = useContext(CorsURLContext);
   useEffect(() => {
     async function getMovieData() {
@@ -26,16 +27,30 @@ const Movie = ({ movieID, selectedMovie, setMovie }) => {
     });
   }
 
+  const movieImageStyle = movieImgLoaded
+    ? { display: "block" }
+    : { display: "none" };
+
   return (
-    movieData && (
-      <div className={styles.container} onClick={showMovieDetails}>
-        <img className={styles.img} src={movieData.d[0].i.imageUrl} />
-        <div className={styles["container-text"]}>
-          <p className={styles.title}>{movieData.d[0].l}</p>
-          <p className={styles.director}>{movieData.d[0].s}</p>
+    <>
+      {movieData && (
+        <div className={styles.container} onClick={showMovieDetails}>
+          {!movieImgLoaded && <LoadingSpinner />}
+          <img
+            style={movieImageStyle}
+            className={styles.img}
+            src={movieData.d[0].i.imageUrl}
+            onLoad={() => {
+              setMovieImgLoaded(true);
+            }}
+          />
+          <div className={styles["container-text"]}>
+            <p className={styles.title}>{movieData.d[0].l}</p>
+            <p className={styles.director}>{movieData.d[0].s}</p>
+          </div>
         </div>
-      </div>
-    )
+      )}
+    </>
   );
 };
 
