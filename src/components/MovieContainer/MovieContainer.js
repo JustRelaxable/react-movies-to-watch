@@ -3,16 +3,16 @@ import Movie from "../Movie/Movie";
 
 const MovieContainer = ({
   setAddedMovies,
-  addedMovies,
+  renderedMovies,
   selectedMovie,
   setMovie,
 }) => {
   return (
     <div className={styles.container}>
-      {addedMovies.map((e, i) => {
+      {renderedMovies.map((e, i) => {
         return (
           <Movie
-            key={`movie-${i}`}
+            key={`movie-${e}`}
             movieID={e}
             selectedMovie={selectedMovie}
             setMovie={setMovie}

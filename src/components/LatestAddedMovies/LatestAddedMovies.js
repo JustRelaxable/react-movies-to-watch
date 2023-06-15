@@ -8,8 +8,21 @@ import SearchResultContainer from "../SearchResultContainer/SearchResultContaine
 import styles from "./LatestAddedMovies.module.css";
 
 const LatestAddedMovies = ({ style, selectedMovie, setMovie }) => {
+  const maxMoviesPerPage = 8;
   const [addedMovies, setAddedMovies] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
   const addedMovieCount = addedMovies.length;
+  const pageCount = Math.ceil(addedMovieCount / maxMoviesPerPage);
+  const [renderedMovies, setRenderedMovies] = useState([]);
+
+  useEffect(() => {
+    setRenderedMovies(
+      addedMovies.slice(
+        (pageNumber - 1) * maxMoviesPerPage,
+        (pageNumber - 1) * maxMoviesPerPage + 8
+      )
+    );
+  }, [pageNumber, addedMovies]);
 
   useEffect(() => {
     setAddedMovies(JSON.parse(localStorage.getItem("movies")) || []);
@@ -24,11 +37,15 @@ const LatestAddedMovies = ({ style, selectedMovie, setMovie }) => {
         <>
           <MovieContainer
             setAddedMovies={setAddedMovies}
-            addedMovies={addedMovies}
+            renderedMovies={renderedMovies}
             selectedMovie={selectedMovie}
             setMovie={setMovie}
           ></MovieContainer>
-          <Pagination></Pagination>
+          <Pagination
+            pageNumber={pageNumber}
+            setPageNumber={setPageNumber}
+            pageCount={pageCount}
+          ></Pagination>
         </>
       )}
 
