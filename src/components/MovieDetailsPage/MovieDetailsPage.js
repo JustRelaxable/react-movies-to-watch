@@ -4,8 +4,8 @@ import styles from "./MovieDetailsPage.module.css";
 
 import { CorsURLContext } from "../../App";
 
-const MovieDetailsPage = (props) => {
-  const isMovieSelected = Object.keys(props.selectedMovie).length > 0;
+const MovieDetailsPage = ({ selectedMovie, setMovie }) => {
+  const isMovieSelected = Object.keys(selectedMovie).length > 0;
 
   const [movieStoryline, setMovieStoryline] = useState(
     "Movie storyline is loading..."
@@ -20,7 +20,7 @@ const MovieDetailsPage = (props) => {
   useEffect(() => {
     async function fetchMovieStoryline() {
       const request = await fetch(
-        `${corsUrl}https://caching.graphql.imdb.com/?operationName=TMD_Storyline&variables=%7B%22titleId%22%3A%22${props.selectedMovie.key}%22%7D&extensions=%7B%22persistedQuery%22%3A%7B%22sha256Hash%22%3A%2287f41463a48af95ebba3129889d17181402622bfd30c8dc9216d99ac984f0091%22%2C%22version%22%3A1%7D%7D`,
+        `${corsUrl}https://caching.graphql.imdb.com/?operationName=TMD_Storyline&variables=%7B%22titleId%22%3A%22${selectedMovie.key}%22%7D&extensions=%7B%22persistedQuery%22%3A%7B%22sha256Hash%22%3A%2287f41463a48af95ebba3129889d17181402622bfd30c8dc9216d99ac984f0091%22%2C%22version%22%3A1%7D%7D`,
         {
           headers: { "Content-Type": "application/json" },
         }
@@ -34,17 +34,17 @@ const MovieDetailsPage = (props) => {
     if (isMovieSelected) {
       fetchMovieStoryline();
       setFirstTime(false);
-      setImgSrc(props.selectedMovie.imgSrc);
-      setMovieTitle(props.selectedMovie.title);
-      setMovieDirector(props.selectedMovie.director);
+      setImgSrc(selectedMovie.imgSrc);
+      setMovieTitle(selectedMovie.title);
+      setMovieDirector(selectedMovie.director);
       setMovieInList(
-        (localStorage.getItem("movies") || []).includes(props.selectedMovie.key)
+        (localStorage.getItem("movies") || []).includes(selectedMovie.key)
       );
     }
-  }, [props.selectedMovie]);
+  }, [selectedMovie]);
 
   const resetSelectedMovie = () => {
-    props.setMovie({});
+    setMovie({});
   };
 
   function stripHtml(html) {
@@ -55,7 +55,7 @@ const MovieDetailsPage = (props) => {
 
   function addMovie() {
     const movies = JSON.parse(localStorage.getItem("movies")) || [];
-    movies.push(props.selectedMovie.key);
+    movies.push(selectedMovie.key);
     localStorage.setItem("movies", JSON.stringify(movies));
     setMovieInList(true);
   }
@@ -64,7 +64,7 @@ const MovieDetailsPage = (props) => {
     const movies = JSON.parse(localStorage.getItem("movies"));
     localStorage.setItem(
       "movies",
-      JSON.stringify(movies.filter((e) => e !== props.selectedMovie.key))
+      JSON.stringify(movies.filter((e) => e !== selectedMovie.key))
     );
     setMovieInList(false);
   }
@@ -112,7 +112,17 @@ const MovieDetailsPage = (props) => {
         <Button color="gray" onClick={resetSelectedMovie}>
           Back
         </Button>
-        <Button color="gray">Open in IMDB</Button>
+        <Button
+          color="gray"
+          onClick={() => {
+            window.open(
+              `https://imdb.com/title/${selectedMovie.movieID}`,
+              "_blank"
+            );
+          }}
+        >
+          Open in IMDB
+        </Button>
       </div>
     </div>
   );

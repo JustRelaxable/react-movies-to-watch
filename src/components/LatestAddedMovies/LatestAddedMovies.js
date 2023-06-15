@@ -7,7 +7,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import SearchResultContainer from "../SearchResultContainer/SearchResultContainer";
 import styles from "./LatestAddedMovies.module.css";
 
-const LatestAddedMovies = (props) => {
+const LatestAddedMovies = ({ style, selectedMovie, setMovie }) => {
   const [addedMovies, setAddedMovies] = useState([]);
   const addedMovieCount = addedMovies.length;
 
@@ -16,7 +16,7 @@ const LatestAddedMovies = (props) => {
   }, [localStorage.getItem("movies")]);
 
   return (
-    <div className={styles.section} style={props.style}>
+    <div className={styles.section} style={style}>
       <div className={styles.header}>
         <p className={styles["section-text"]}>Latest Added Movies</p>
       </div>
@@ -25,8 +25,8 @@ const LatestAddedMovies = (props) => {
           <MovieContainer
             setAddedMovies={setAddedMovies}
             addedMovies={addedMovies}
-            selectedMovie={props.selectedMovie}
-            setMovie={props.setMovie}
+            selectedMovie={selectedMovie}
+            setMovie={setMovie}
           ></MovieContainer>
           <Pagination></Pagination>
         </>

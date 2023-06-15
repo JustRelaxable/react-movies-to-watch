@@ -3,13 +3,13 @@ import styles from "./Movie.module.css";
 
 import { CorsURLContext } from "../../App";
 
-const Movie = (props) => {
+const Movie = ({ movieID, selectedMovie, setMovie }) => {
   const [movieData, setMovieData] = useState(null);
   const corsUrl = useContext(CorsURLContext);
   useEffect(() => {
     async function getMovieData() {
       const fetchedData = await fetch(
-        `${corsUrl}https://v3.sg.media-imdb.com/suggestion/x/${props.movieID}.json`
+        `${corsUrl}https://v3.sg.media-imdb.com/suggestion/x/${movieID}.json`
       ).then((x) => x.json());
       setMovieData(fetchedData);
     }
@@ -17,11 +17,12 @@ const Movie = (props) => {
   }, []);
 
   function showMovieDetails() {
-    props.setMovie({
+    setMovie({
       title: movieData.d[0].l,
       director: movieData.d[0].s,
       imgSrc: movieData.d[0].i.imageUrl,
-      key: props.movieID,
+      key: movieID,
+      movieID: movieID,
     });
   }
 

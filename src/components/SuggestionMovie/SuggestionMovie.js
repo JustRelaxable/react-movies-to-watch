@@ -1,15 +1,15 @@
 import styles from "./SuggestionMovie.module.css";
 
-const SuggestionMovie = (props) => {
+const SuggestionMovie = ({ imgSrc, title, subheader, index }) => {
   return (
     <div
       className={styles["img-container"]}
-      style={{ left: `${props.index * 100}%` }}
+      style={{ left: `${index * 100}%` }}
     >
-      <img className={styles.img} src={props.imgSrc}></img>
+      <img className={styles.img} src={imgSrc}></img>
       <div className={styles["movie-img-text-container"]}>
-        <p className={styles["primary-text"]}>{props.title}</p>
-        <p className={styles["secondary-text"]}>{props.subheader}</p>
+        <p className={styles["primary-text"]}>{title}</p>
+        <p className={styles["secondary-text"]}>{subheader}</p>
       </div>
     </div>
   );

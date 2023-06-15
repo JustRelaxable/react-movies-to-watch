@@ -1,16 +1,21 @@
 import styles from "./MovieContainer.module.css";
 import Movie from "../Movie/Movie";
 
-const MovieContainer = (props) => {
+const MovieContainer = ({
+  setAddedMovies,
+  addedMovies,
+  selectedMovie,
+  setMovie,
+}) => {
   return (
     <div className={styles.container}>
-      {props.addedMovies.map((e, i) => {
+      {addedMovies.map((e, i) => {
         return (
           <Movie
             key={`movie-${i}`}
             movieID={e}
-            selectedMovie={props.selectedMovie}
-            setMovie={props.setMovie}
+            selectedMovie={selectedMovie}
+            setMovie={setMovie}
           ></Movie>
         );
       })}

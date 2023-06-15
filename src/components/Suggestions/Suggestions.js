@@ -5,7 +5,7 @@ import loadingSpinner from "../../svg-loaders/rings.svg";
 
 import { CorsURLContext } from "../../App";
 
-const Suggestions = (props) => {
+const Suggestions = ({ style }) => {
   const movieCount = 6;
   const movieSlideTime = 10000;
   const timeBarRefreshTime = 100;
@@ -89,7 +89,7 @@ const Suggestions = (props) => {
 
   return (
     <div
-      style={props.style}
+      style={style}
       className={styles.content}
       onTouchStart={(e) => {
         setTouchStartX(e.changedTouches[0].clientX);

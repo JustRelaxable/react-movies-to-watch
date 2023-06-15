@@ -1,17 +1,17 @@
 import SearchResult from "../SearchResult/SearchResult";
 import styles from "./SearchResultContainer.module.css";
 
-const SearchResultContainer = (props) => {
+const SearchResultContainer = ({ movies, setMovie }) => {
   return (
     <div className={styles.container}>
-      {props.movies.map((x) => (
+      {movies.map((x) => (
         <SearchResult
           key={x.id}
           id={x.id}
           imgURL={x.i.imageUrl}
           movieTitle={x.l}
           movieDirector={x.s}
-          setMovie={props.setMovie}
+          setMovie={setMovie}
         ></SearchResult>
       ))}
     </div>

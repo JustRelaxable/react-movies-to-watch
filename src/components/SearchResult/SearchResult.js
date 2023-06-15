@@ -1,13 +1,14 @@
 import styles from "./SearchResult.module.css";
 
-const SearchResult = (props) => {
+const SearchResult = ({ id, imgURL, movieTitle, movieDirector, setMovie }) => {
   const onClickMovieHandler = () => {
-    props.setMovie((a) => {
+    setMovie((a) => {
       const selectedMovie = {
-        imgSrc: props.imgURL,
-        title: props.movieTitle,
-        director: props.movieDirector,
-        key: props.id,
+        imgSrc: imgURL,
+        title: movieTitle,
+        director: movieDirector,
+        key: id,
+        movieID: id,
       };
       return selectedMovie;
     });
@@ -15,10 +16,10 @@ const SearchResult = (props) => {
 
   return (
     <div className={styles["search-result"]} onClick={onClickMovieHandler}>
-      <img className={styles.img} src={props.imgURL}></img>
+      <img className={styles.img} src={imgURL}></img>
       <div className={styles["text-container"]}>
-        <p className={styles.title}>{props.movieTitle}</p>
-        <p className={styles.director}>{props.movieDirector}</p>
+        <p className={styles.title}>{movieTitle}</p>
+        <p className={styles.director}>{movieDirector}</p>
       </div>
     </div>
   );
