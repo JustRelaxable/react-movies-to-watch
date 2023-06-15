@@ -27,7 +27,9 @@ const MovieDetailsPage = ({ selectedMovie, setMovie }) => {
       );
       const jsonData = await request.json();
       setMovieStoryline(
-        stripHtml(jsonData.data.title.synopses.edges[0].node.plotText.plaidHtml)
+        stripHtml(
+          jsonData.data.title.summaries.edges[0].node.plotText.plaidHtml
+        )
       );
     }
 
