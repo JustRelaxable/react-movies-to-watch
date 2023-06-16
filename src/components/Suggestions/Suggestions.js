@@ -36,7 +36,7 @@ const Suggestions = ({ style }) => {
         .then((x) =>
           x.querySelectorAll(".sc-bffbe2eb-1>.ipc-slate>.ipc-media>.ipc-image")
         )
-        .then((x) => Array.from(x).map((x) => x.src));
+        .then((x) => Array.from(x).map((x) => x.srcset));
 
       const fetchedSuggestedMovies = [];
       for (let i = 0; i < movieCount; i++) {
