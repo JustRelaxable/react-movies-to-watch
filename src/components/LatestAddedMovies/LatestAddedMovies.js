@@ -8,21 +8,35 @@ import SearchResultContainer from "../SearchResultContainer/SearchResultContaine
 import styles from "./LatestAddedMovies.module.css";
 
 const LatestAddedMovies = ({ style, selectedMovie, setMovie }) => {
-  const maxMoviesPerPage = 8;
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [addedMovies, setAddedMovies] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const addedMovieCount = addedMovies.length;
-  const pageCount = Math.ceil(addedMovieCount / maxMoviesPerPage);
   const [renderedMovies, setRenderedMovies] = useState([]);
+
+  const addedMovieCount = addedMovies.length;
+  const maxMoviesPerPage = windowWidth < 834 && windowWidth > 510 ? 6 : 8;
+  const pageCount = Math.ceil(addedMovieCount / maxMoviesPerPage);
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  });
 
   useEffect(() => {
     setRenderedMovies(
       addedMovies.slice(
         (pageNumber - 1) * maxMoviesPerPage,
-        (pageNumber - 1) * maxMoviesPerPage + 8
+        (pageNumber - 1) * maxMoviesPerPage + maxMoviesPerPage
       )
     );
-  }, [pageNumber, addedMovies]);
+  }, [pageNumber, addedMovies, windowWidth]);
 
   useEffect(() => {
     setAddedMovies(JSON.parse(localStorage.getItem("movies")) || []);
